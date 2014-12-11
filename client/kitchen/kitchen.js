@@ -103,6 +103,7 @@ Template.kitchen_item.events({
         Meteor.call('setOrderStatus', this._id, order_status, function (error, result) {});
     },
     'dblclick .eat_where': function () {
+        console.log(this);
         Session.set("kitchen_ticket", JSON.stringify(this));
         Meteor.setTimeout(function(){
             window.print();
@@ -124,7 +125,7 @@ Template.kitchen_ticket.helpers({
                         order.items = items;
                         Session.set("kitchen_ticket", JSON.stringify(order));
                         Meteor.setTimeout(function(){
-                            //window.print();
+                            window.print();
                         }, 100);
                     }
                 }, 100);
