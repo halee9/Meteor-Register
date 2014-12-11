@@ -105,7 +105,7 @@ Template.kitchen_item.events({
     'dblclick .eat_where': function () {
         Session.set("kitchen_ticket", JSON.stringify(this));
         Meteor.setTimeout(function(){
-            //window.print();
+            window.print();
         }, 100);
      }
 });
