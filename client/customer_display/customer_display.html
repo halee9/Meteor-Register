@@ -1,0 +1,39 @@
+<template name="customer_display">
+	<div class="customer_display">
+		<div class="cd_header">
+			Total:
+			<div class="pull-right">{{ currency sum.total }}</div>
+		</div>
+		<div class="clear items">
+			{{#each items}}
+			{{> customer_display_item }}
+			{{/each}}
+		</div>
+		<div class="footer">
+			<div class="pull-right">
+				<table class="table text-right">
+					<tr><td>Subtotal:</td><td>{{ currency sum.subtotal }}</td></tr>
+					<tr><td>tax:</td><td>{{ currency sum.tax }}</td></tr>
+					<tr><td>Total:</td><td>{{ currency sum.total }}</td></tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="customer_display_item">
+	<div>
+		<div class="pull-right">{{ currency subtotal }}</div>
+		<div>{{ name }} X {{ qty }}</div>
+		<div class="clear option small">
+			{{#each option}}
+			<div class="clear">
+				{{ name }}
+				{{#if price}}
+				<span> - {{ currency price }}</span>
+				{{/if}}
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</template>

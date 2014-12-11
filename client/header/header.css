@@ -1,0 +1,16 @@
+.header {
+	background-color: #222;
+	color: #eee;
+	padding: 0 1%;
+	font-size: 40px;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.header .message {
+	width: 80%;
+	display: inline-block;
+}

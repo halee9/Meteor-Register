@@ -1,0 +1,123 @@
+<template name="kitchen">
+	<div class="hidden-print">
+		{{> header }}
+		<div class="kitchen">
+			<div class="col-lg-4">
+				{{> walkin_list }}
+			</div>
+			<div class="col-lg-4">
+				{{> online_list }}
+			</div>
+			<div class="col-lg-4">
+				{{> finished_list }}
+				{{> special_list }}
+				{{> kitchen_ticket}}
+			</div>
+		</div>
+	</div>
+	<!--
+	<div class="visible-print-block">
+		{{> kitchen_ticket}}
+	</div>
+-->
+</template>
+
+<template name="walkin_list">
+	{{#each orders}}
+	{{> kitchen_item }}
+	{{/each}}
+</template>
+<template name="online_list">
+	{{#each orders}}
+	{{> kitchen_item }}
+	{{/each}}
+</template>
+<template name="finished_list">
+	<div class="finished_list">
+		{{#each orders}}
+		{{> kitchen_item }}
+		{{/each}}
+	</div>
+</template>
+<template name="special_list">
+	{{#each orders}}
+	{{> kitchen_item }}
+	{{/each}}
+</template>
+
+<template name="kitchen_item">
+	<table class="kitchen_item {{kitchen_out}}">
+		<tr>
+			<td class="order_number text-center"><strong>{{ last_two order_number }}</strong></td>
+			<td class="order_items">
+				{{ #each items }}
+				<div class="clear {{job_color}} each_item">
+					<div class="text-nowrap pull-left item_name">
+						<strong>
+						{{ #if qty_show }}
+							<span class="qty">{{ qty }} </span>
+						{{ /if }}
+						{{ SKU }}
+						</strong>
+					</div>
+					{{ #each option }}
+						{{ toCapitalize SKU }}
+					{{ /each }}
+					{{ custom_option.text }}
+				</div>
+				{{ /each }}
+			</td>
+			<td class="eat_where text-center {{#if togo}} blue {{else}} red {{/if}}">
+				<strong>{{ first_letter eat_where }}</strong>
+				<span class="right_bottom">{{ delay }}</span>
+				<span class="left_bottom">{{ getFirstLetter order_type }}</span>
+			</td>
+		</tr>
+	</table>
+</template>
+
+<template name="kitchen_ticket">
+	<div class="kitchen_ticket">
+		{{#with order}}
+		<div class="text-center">
+			<p>
+				<strong>MIDORI TERIYAKI</strong><br>
+				1120 Howell St. Seattle WA 98101<br>
+				www.TeriyakiOnline.com
+			</P>
+		</div>
+		<div>
+			{{#each items}}
+			<div class="items clear">
+				<div class="pull-left big_text">
+					{{#if multiple}}
+					{{ qty }} 
+					{{/if}}
+					{{ SKU }}
+				</div>
+				{{ #each option }}
+					{{ toCapitalize SKU }}
+				{{ /each }}
+				{{ custom_option.text }}
+				<div class="pull-right big_text">{{ currency subtotal }}</div>
+			</div>
+			{{/each}}
+		</div>
+		<div class="clear">
+			<div class="pull-left bigger_text">
+				#{{lastTwoDigits order_number}}
+				{{getFirstLetter order_type}}
+				{{getFirstLetter eat_where}}
+			</div>
+			<div class="pull-right">
+				<div class="text-right">Subtotal: {{currency sum.subtotal}}</div>
+				<div class="text-right">Tax: {{currency sum.tax}}</div>
+				<div class="text-right">Total: {{currency sum.total}}</div>
+			</div>
+			<div class="clear big_text text-center">{{customer_name}}</div>
+			<div class="clear big_text text-center">{{timeForm reserved_time}}</div>
+		</div>
+		{{/with}}
+	</div>
+</template>
+

@@ -1,0 +1,52 @@
+<template name="menu">
+	<div class="menu hidden-print">
+		<div class="col-lg-3 items_row">
+			{{> itemlist_1 }}
+		</div>
+		<div class="col-lg-3 items_row">
+			{{> itemlist_2 }}
+		</div>
+		<div class="col-lg-3 items_row">
+			{{> itemlist_3 }}
+		</div>
+		<div class="col-lg-3 items_row">
+			{{> itemlist_4 }}
+		</div>
+	</div>
+</template>
+
+<template name="itemlist_1">
+  	{{ #each items }}
+  		{{> item}}
+  	{{ /each }}
+</template>
+
+<template name="item">
+    <div class="item {{background}} {{selected}}">
+		<span class="SKU">{{SKU}}</span>
+		<span class="price">{{price}}</span>
+		<div class="name">{{name}}</div>
+    </div>
+</template>
+
+<template name="itemlist_2">
+ 	<div class="items_row">
+	  	{{ #each items }}
+	  		{{> item}}
+	  	{{ /each }}
+	</div>
+</template>
+<template name="itemlist_3">
+ 	<div class="items_row">
+	  	{{ #each items }}
+	  		{{> item}}
+	  	{{ /each }}
+	</div>
+</template>
+<template name="itemlist_4">
+ 	<div class="items_row">
+	  	{{ #each items }}
+	  		{{> item}}
+	  	{{ /each }}
+	</div>
+</template>

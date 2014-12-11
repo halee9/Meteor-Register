@@ -1,0 +1,37 @@
+.payment {
+	font-size: 24px;
+	overflow: hidden;
+	color: #eee;
+	max-width: 1024px;
+	margin: 0 auto;
+}
+.payment .ordersToPay, .payment .pay_info, .payment .pay_action {
+	background-color: #eee;
+	color: #333;
+	margin: 20px 5px;
+	padding: 10px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.payment .item {
+	overflow: hidden;
+}
+.payment .pay_action input {
+	color: #333;
+	text-align: right;
+}
+.payment .item.selected {
+	background-color: yellow;
+}
+.payment .item.paid {
+	background-color: #333;
+	color: #eee;
+}
+.payment .paid {
+	text-decoration: line-through;
+}
+
+.payment button.credit_apply, .payment button.cash_apply {
+	/*display: none;*/
+}

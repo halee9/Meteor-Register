@@ -1,0 +1,17 @@
+.modifier .col-md-6 {
+	padding: 0 1px;
+}
+.modifier .item {
+	height: 60px;
+	position: relative;
+}
+.modifier .price {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.modifier .name {
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+}

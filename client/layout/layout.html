@@ -1,0 +1,19 @@
+<template name="layout">
+	{{> header }}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-3">
+				{{> cart }}
+			</div>
+			<div class="col-lg-9">
+				{{> customer }}
+				<div class="col-lg-8 no_padding">
+					{{> menu }}
+				</div>
+				<div class="col-lg-4 no_padding">
+					{{> modifier }}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

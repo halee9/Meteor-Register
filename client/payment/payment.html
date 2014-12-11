@@ -1,0 +1,111 @@
+<template name="payment">
+	{{> header }}
+	<div class="payment">
+		<div class="col-md-6">
+			{{> pay_action }}
+		</div>
+		<div class="col-md-6">
+			{{> ordersToPay }}
+			{{> pay_info }}
+		</div>
+	</div>
+</template>
+
+<template name="ordersToPay">
+	<div class="ordersToPay">
+		<div class="text-center">#{{ last_two order_number }} Order items to pay</div><hr>
+		{{ #each items }}
+			{{> pay_item }}
+		{{ /each}}
+		<hr>
+		{{> pay_total }}
+	</div>
+</template>
+
+<template name="pay_total">
+	<div class="pay_total pull-right text-right">
+		<div class="subtotal">Subtotal: {{ currency sum.subtotal }}</div>
+		<div class="tax">Tax: {{ currency sum.tax }}</div>
+		<div class="total">Total: {{ currency sum.total }}</div>
+	</div>
+</template>
+
+<template name="pay_item">
+    <div class="item white {{selected}} {{paid}} clear">
+    	{{#if selected }}
+    	<i class="fa fa-check-square-o"></i>
+    	{{else}}
+    	<i class="fa fa-square-o"></i>
+    	{{/if}}
+    	{{#if qty_show }}
+		<span>{{qty}}</span>
+		{{/if}}
+		<span>{{name}}</span>
+		<span class="pull-right {{paid}}">{{currency subtotal}}</span>
+		<div class="option">
+			{{ #each option }}
+				<span>{{ SKU }} |</span>
+			{{ /each }}
+			<span>{{ custom_option.text }}</span>
+		</div>
+    </div>
+</template>
+
+<template name="pay_info">
+	<div class="pay_info">
+		<div class="text-center">Payable Amount</div><hr>
+		{{#with amount}}
+		<table class="text-right" width="100%">
+			<tr><td>Subtotal :</td><td> ${{ currency payable.subtotal }}</td></tr>
+			<tr><td>Tax :</td><td> ${{ currency payable.tax }}</td></tr>
+			<tr><td class="text_red">Total :</td><td class="text_red"> ${{ currency payable.total }}</td></tr>
+		</table>
+		<hr>
+		<div class="text-right">
+			Unpaid Amount: ${{ currency unpaid }}
+		</div>
+		<div class="text-right">
+			Paid Amount: ${{ currency paid }}
+		</div>
+		{{/with}}
+	</div>
+</template>
+
+<template name="pay_action">
+	<div class="pay_action">
+		<div class="text-center">#{{ last_two order_number }} Payment</div><hr>
+		{{#with pay}}
+		{{#if payable}}
+		<div class="col-sm-12">
+			<div class="col-sm-3 text-right">Payable: </div>
+			<div class="col-sm-4">{{ currency payable }}</div>
+		</div>
+		<div class="col-sm-12">
+			<div class="col-sm-3 text-right">Credit: </div>
+			<div class="col-sm-4"><input class="credit form-control input-lg" type="number" value="{{ currency credit }}"></div>
+			<div class="col-sm-4"><button class="credit_apply">Credit</button></div>
+		</div>
+		<div class="col-sm-12">
+			<div class="col-sm-3 text-right">Cash: </div>
+			<div class="col-sm-4"><input class="cash form-control input-lg" type="number" step="0.01" min="0.00" value="{{ currency cash }}"></div>
+			<div class="col-sm-4"><button class="cash_apply">Cash</button></div>
+		</div>
+		<div class="col-sm-12">
+			<div class="col-sm-3 text-right">Change: </div>
+			<div class="col-sm-9">{{ currency change }}</div>
+		</div>
+		<div class="col-sm-12">
+			{{#each cash_pickers}}
+				<button class="btn btn-warning btn-lg cash_picker">{{this}}</button>
+			{{/each}}
+		</div>
+		<hr>
+		<div class="col-sm-12 text-center">
+			<button class="btn btn-default btn-lg backToOrder">Back to order</button>
+			<button class="btn btn-primary btn-lg submit">Submit</button>
+		</div>
+		{{/if}}
+		{{/with}}
+	</div>
+</template>
+

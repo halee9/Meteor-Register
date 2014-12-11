@@ -1,0 +1,57 @@
+<template name="modifier">
+	<!--<div id="order_list">{{> order_list }}</div>
+	<div id="customer_name">{{> customer_name }}</div>
+	<div id="reserved_time">{{> reserved_time }}</div>-->
+	<div class="modifier hidden-print">
+		<div class="col-md-6">
+			{{> modifiers }}
+			{{> name_changer }}
+		</div>
+		<div class="col-md-6">
+			{{> addons }}
+		</div>
+	</div>
+</template>
+
+<template name="modifiers">
+	{{ #each items }}
+		{{> modifier_item}}
+	{{ /each }}
+</template>
+
+<template name="modifier_item">
+    <div class="item {{background}} {{selected}}">
+		<span class="SKU">{{SKU}}</span>
+		<span class="price">{{price}}</span>
+		<div class="name">{{name}}</div>
+    </div>
+</template>
+
+<template name="name_changer">
+	{{ #each items }}
+		{{> name_changer_item}}
+	{{ /each }}
+</template>
+
+<template name="name_changer_item">
+    <div class="item {{background}} {{selected}}">
+		<span class="SKU">{{SKU}}</span>
+		<span class="price">{{price}}</span>
+		<div class="name">{{name}}</div>
+    </div>
+</template>
+
+<template name="addons">
+	  	{{ #each addon_items }}
+	  		{{> addon_item}}
+	  	{{ /each }}
+</template>
+
+<template name="addon_item">
+    <div class="item {{background}} {{selected}}">
+		<span class="SKU">{{SKU}}</span>
+		<span class="price">{{price}}</span>
+		<div class="name">{{name}}</div>
+    </div>
+</template>
+

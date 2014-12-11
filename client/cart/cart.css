@@ -1,0 +1,72 @@
+.cart .item {
+	background-color: #eee;
+	border-radius: 2px;
+	clear: both;
+}
+.cart .item .price {
+	font-size: inherit;
+}
+.cart .item .option {
+	font-size: 60%;
+}
+.cart .item .custom_option {
+	color: #333;
+	display: none;
+}
+.cart .item .custom_option input {
+	font-size: 80%;
+}
+
+.cart .item .custom_option .show {
+	display: block;
+}
+
+.order_info, .cart_control {
+	clear: both;
+	text-align: center;
+	padding: 10px;
+}
+
+.cart .additional_info {
+	clear: both;
+	font-size: 24px;
+	color: yellow;
+}
+
+.order_total {
+	color: #eee;
+	font-weight: bold;
+	padding: 5px 10px;
+}
+
+.order_total .subtotal, .order_total .tax {
+	font-size: 20px;
+}
+
+.order_total .total {
+	font-size: 50px;
+	float: right;
+	margin-top: -7px;
+}
+
+.cart .toggle {
+	width: 46%;
+	font-size: 24px;
+	height: 50px;
+}
+
+
+#customer_name, #reserved_time  {
+	padding: 10px;
+	font-size: 24px;
+}
+#customer_name label, #reserved_time label {
+	color: #eee;
+}
+#reserved_time input {
+	width: 60%;
+}
+.customer_ticket {
+	/*display: none;*/
+}
+

@@ -1,0 +1,122 @@
+/* CSS declarations go here */
+@import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow);
+@import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700);
+@import url(http://fonts.googleapis.com/css?family=PT+Sans:700);
+
+body {
+	background-color: #555;
+	font-family: 'PT Sans Narrow', sans-serif;
+	padding-bottom: 60px;
+}
+
+.no_padding {
+	padding: 0 1px;
+}
+
+.row>div {
+	padding: 0 1px;
+}
+
+.white {
+	background-color: #eee;
+	color: #333;
+}
+.yellow {
+	background-color: #FFFFCC;
+	color: #333;
+}
+.green {
+	background-color: #CCFFCC;
+	color: #333;
+}
+.red {
+	background-color: #FFCCCC;
+	color: #333;
+}
+.blue {
+	background-color: #CCFFFF;
+	color: #333;
+}
+.black {
+	background-color: #555;
+	color: #eee;
+}
+.orange {
+	background-color: #FFCC99;
+	color: #333;
+}
+.royalBlue {
+	background-color: #4169E1;
+	color: #eee;
+}
+
+.text_red {
+	color: #800000;
+}
+.text_white {
+	color: #eee;
+}
+
+.item {
+	font-weight: 600;
+	font-size: 24px;
+	border: 2px solid #777;
+	border-radius: 8px;
+	padding: 5px 10px;
+	margin: 1px 0;
+	cursor: pointer;
+}
+
+.item .price {
+	font-size: 60%;
+	float: right;
+}
+.item .name {
+	font-size: 50%;
+	font-weight: normal;
+	clear: both;
+	line-height: 100%;
+}
+
+.item.selected {
+	/*
+    background-color: #0066CC;
+    color: #eee;
+    */
+    background-color: yellow;
+}
+
+.btn {
+	font-size: 24px;
+	margin: 5px;
+	min-width: 80px;
+}
+
+.btn.selected {
+	background-color: yellow;
+}
+
+.hide {
+	display: none;
+}
+.show {
+	display: block;
+}
+.clear {
+	clear: both;
+}
+.smaller {
+	font-size: 50%;
+}
+
+hr {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+  border-style: solid none;
+  border-width: 1px 0;
+  margin: 5px 0;
+}

@@ -1,0 +1,28 @@
+<template name="ticket">
+	{{>customer_ticket}}
+</template>
+
+<template name="customer_ticket">
+	<div class="customer_ticket">
+		<div class="text-center" style="font-size: 200px; line-height: 110%;"><strong>{{order_number}}</strong></div>
+		<div>
+			{{#each items}}
+			<div>
+				<span>{{ name }}</span>
+				<span> X {{ qty }}</span>
+				<span class="pull-right">{{ currency subtotal }}</span>
+			</div>
+			{{/each}}
+			<div class="text-right">Subtotal: {{currency sum.subtotal}}</div>
+			<div class="text-right">Tax: {{currency sum.tax}}</div>
+			<div class="text-right">Total: {{currency sum.total}}</div>
+		</div>
+		<div class="text-center">
+			<p>
+				<strong>MIDORI TERIYAKI</strong><br>
+				1120 Howell St. Seattle WA 98101<br>
+				www.TeriyakiOnline.com
+			</P>
+		</div>
+	</div>
+</template>

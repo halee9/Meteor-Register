@@ -1,0 +1,22 @@
+
+.menu .col-lg-3 {
+	padding: 0 1px;
+}
+
+.menu .item {
+	height: 77px;
+	position: relative;
+	font-size: 30px;
+}
+
+.menu .price {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.menu .name {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	text-align: right;
+}

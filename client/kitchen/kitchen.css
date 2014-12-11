@@ -1,0 +1,102 @@
+.kitchen {
+	font-size: 360%;
+}
+
+.kitchen>div {
+	padding: 0 1px;
+}
+
+.kitchen .kitchen_item {
+	background-color: #eee;
+	width: 100%;
+	margin: 1%;
+	border-spacing: 0;
+	line-height: 120%;
+}
+
+.kitchen_item .order_number {
+	width: 12%;
+	cursor: pointer;
+	background-color: #333;
+	color: #eee;
+}
+
+.kitchen_item .eat_where {
+	width: 10%;
+	cursor: pointer;
+	position: relative;
+}
+.kitchen_item .qty {
+	color: red;
+}
+.kitchen_item .order_items {
+	padding: 0;
+}
+.kitchen_item .item_name {
+	color: #333;
+	font-weight: 700;
+	margin: 0 2%;
+	font-size: 200%;
+	line-height: 120%;
+}
+.kitchen_item .each_item {
+	font-size: 50%;
+	color: blue;
+	font-weight: 700;
+	overflow: hidden;
+	line-height: 120%;
+}
+
+.kitchen_item .square {
+	display: inline-block;
+	border: 3px solid #777;
+	border-radius: 20%;
+	width: 10%;
+	text-align: center;
+}
+
+.kitchen_item .right_bottom {
+	position: absolute;
+	bottom: 0px;
+	right: 5%;
+	font-size: 30%;
+	line-height: 100%;
+}
+.kitchen_item .left_bottom {
+	position: absolute;
+	bottom: 0px;
+	left: 5%;
+	font-size: 30%;
+	line-height: 100%;
+}
+
+.finished_list {
+	overflow-y: scroll;
+	max-height: 200px;
+	padding-right: 3%;
+	margin-bottom: 10px;
+}
+
+.kitchen_out {
+	color: #aaa;
+}
+
+.kitchen_ticket {
+	background-color: #eee;
+	font-size: 12px;
+	width: 240px;
+	overflow: hidden;
+}
+
+.kitchen_ticket .big_text {
+	font-size: 24px;
+	margin: 0 5px;
+	font-weight: 700;
+}
+
+.kitchen_ticket .bigger_text {
+	font-size: 40px;
+	margin: 0 5px;
+	font-weight: 700;
+}
+

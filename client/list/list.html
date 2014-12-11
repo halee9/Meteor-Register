@@ -1,0 +1,77 @@
+<template name="list">
+	{{> header}}
+	<div class="row list">
+		<div class="col-sm-12 col-md-4">
+			<h2 class="text-center text_white">U N P A I D</h2>
+			<ul class="list-group">
+				{{ #each unpaid_orders }}
+					{{> each_order }}
+				{{ /each }}
+			</ul>
+		</div>
+		<div class="col-sm-12 col-md-4">
+			<h2 class="text-center text_white">P A I D</h2>
+			<ul class="list-group">
+				{{ #each paid_orders }}
+					{{> each_order }}
+				{{ /each }}
+			</ul>
+		</div>
+		<div class="col-sm-12 col-md-4">
+			<h2 class="text-center text_white">D O N E</h2>
+			<ul class="list-group">
+				{{ #each completed_orders }}
+					{{> each_order }}
+				{{ /each }}
+			</ul>
+		</div>
+	</div>
+</template>
+
+<template name="each_order">
+	<a href="#" class="list-group-item list_item {{selected}}">
+		<table>
+			<tr>
+				<td class="order_number">{{ last_two order_number }}</td>
+				<td class="order_type"><i class="fa fa-{{ order_type_icon }}"></i></td>
+				<td class="eat_where"><i class="fa fa-{{ eat_where_icon }}"></i></td>
+				<td class="order_status"><i class="fa fa-{{ order_status_icon }}"></i></td>
+				<td>
+					{{ #each items }}
+					<span>
+						<strong>
+							{{ #if qty_show }}
+							<span>{{ qty }} </span>
+							{{ /if }}
+							<span>{{ SKU }} </span>
+						</strong>
+						{{ #each option }}
+						<span class="smaller">{{ SKU }} </span>
+						{{ /each }}
+						<br/>
+					</span>
+					{{ /each }}
+				</td>
+				<td class="last_tail"><strong>{{ currency sum.total }}</strong></td>
+			</tr>
+			<tr>
+				<td colspan="6" class="customer_name"><strong>{{customer_name}}</strong> {{hours reserved_time}}</td>
+			</tr>
+			{{#if show}}
+			<tr class="item_actions">
+				<td colspan="6" class="text-center">
+					{{#if payment_action}}
+					<button type="button" class="payment btn"><i class="fa fa-usd fa-lg"></i></button>
+					{{/if}}
+					{{#if modify_action}}
+					<button type="button" class="modify btn"><i class="fa fa-pencil-square-o fa-lg"></i></button>
+					{{/if}}
+					{{#if remove_action}}
+					<button type="button" class="remove btn"><i class="fa fa-trash-o fa-lg"></i></button>
+					{{/if}}
+				</td>
+			</tr>
+			{{/if}}
+		</table>
+	</a>
+</template>

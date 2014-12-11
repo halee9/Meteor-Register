@@ -1,0 +1,43 @@
+<template name="customer">
+	<div class="customer white hidden-print">
+		<div class="col-md-6">
+			{{> customer_name }}
+		</div>
+		<div class="col-md-6">
+			{{> reserved_time }}
+		</div>
+		<div class="col-md-12 text-center">
+			<button type="button" class="btn btn-primary close_customer_window">CLOSE</button>
+		</div>
+	</div>
+</template>
+
+<template name="customer_name">
+	<label>Customer Name : </label>
+	<input type="text" class="input-lg" placeholder="Enter customer name here ..">
+	<button type="button" class="btn">Done</button>
+</template>
+
+<template name="reserved_time">
+	<div>
+		<label>Reserved Time : </label>
+		{{#if no_time}}
+		<button type="button" class="btn clock_show">Show</button>
+		{{else}}
+		<span>{{reserved_time}}</span>
+		<button type="button" class="btn delete">X</button>
+		{{/if}}
+	</div>
+	<div class="col-sm-6">
+		{{ #each hours }}
+		<button value="{{ val }}" class="btn hour {{hour_selected}}">{{ hour }}</button>
+		{{ /each }}
+	</div>
+	<div class="col-sm-6">
+		{{ #each minutes }}
+		<button value="{{ val }}" class="btn minute {{minute_selected}}">{{ minute }}</button>
+		{{ /each }}
+	</div>
+
+</template>
+

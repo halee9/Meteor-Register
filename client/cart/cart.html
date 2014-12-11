@@ -1,0 +1,96 @@
+<template name="cart">
+	<div class="cart hidden-print">
+	{{#with cart}}
+		{{> order_info }}
+		{{> order_total }}
+	  	{{ #each items }}
+	  		{{> order_cart_item}}
+	  	{{ /each }}
+	  	{{ #if sum.total }}
+	  		{{> cart_control }}
+	  	{{ /if}}
+  	{{/with}}
+  	</div>
+  	<div class="visible-print-block">
+  	{{> customer_ticket }}
+	</div>
+</template>
+
+<template name="order_cart_item">
+    <div class="item {{selected}}">
+    	{{#if qty_show }}
+		<span>{{qty}}</span>
+		{{/if}}
+		<span>{{name}}</span>
+		<span class="price">{{subtotal}}</span>
+		<div class="option">
+			{{ #each option }}
+				<span>{{ SKU }} |</span>
+			{{ /each }}
+			<span>{{ custom_option.text }}</span>
+		</div>
+		<div class="custom_option {{show}}">
+			<div>
+				<div class="col-sm-8" style="padding: 0 1px">
+					<input type="text" class="form-control custom_option_text" placeholder="Customize option">
+				</div>
+				<div class="col-sm-4" style="padding: 0 1px">
+					<input type="number" class="form-control custom_option_price" value="0.00">
+				</div>
+			</div>
+			<div class="text-center" style="clear: both; padding-top: 5px;">
+				<button type="button" class="btn btn-default btn-lg minus"><span class="glyphicon glyphicon-minus"></span></button> 
+				<button type="button" class="btn btn-primary btn-lg plus"><span class="glyphicon glyphicon-plus"></span></button> 
+			</div>
+		</div>
+    </div>
+</template>
+
+<template name="order_total">
+	<div class="order_total">
+		<div class="additional_info pull-right text-right">
+			<div>{{ lastTwoDigits order_number }}</div>
+			<div>{{ customer_name }}</div>
+			<div>{{ reserved_time }}</div>
+		</div>
+		<div class="clear">
+			<span class="pull-right total">{{ currency sum.total }}</span>
+			<div class="pull-left">
+				<div class="subtotal">S: {{ currency sum.subtotal }}</div>
+				<div class="tax">T: {{ currency sum.tax }}</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="order_info">
+	<div class="order_info">
+		<button type="button" class="toggle order_type" value="{{ order_type }}"><i class="fa fa-{{order_type_icon}}"></i> {{ order_type }}</button>
+		<button type="button" class="toggle eat_where" value="{{ eat_where }}"><i class="fa fa-{{eat_where_icon}}"></i> {{ eat_where }}</button>
+	</div>
+</template>
+
+<template name="cart_control">
+	<div class="cart_control">
+		<button type="button" class="toggle remove_cart_item red">
+			<i class="fa fa-trash-o fa-lg"></i>
+			{{#if cart_item_unselected }}
+			<span>All</span>
+			{{else}}
+			<span>Remove</span>
+			{{/if}}
+		</button>
+		<button type="button" class="toggle send_order royalBlue"><i class="fa fa-save"></i>
+			{{#if update_mode}}
+			 REPLACE
+			{{else}}
+			 SEND
+			{{/if}}
+		</button>
+		{{#if update_mode}}
+		<button type="button" class="cancel_modify btn btn-default btn-lg">CANCEL</button>
+		{{/if}}
+	</div>
+</template>
+
+
