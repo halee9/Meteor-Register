@@ -300,11 +300,11 @@ Meteor.startup(function () {
 
 
 
-    //setHourlyTotal();
+    setHourlyTotal();
     var now = moment()._d;
     Orders.find({created_at: {$gt: now}}).observe({
         added: function(order){
-            //setHourlyTotal();
+            setHourlyTotal();
         }
     });
 
@@ -317,23 +317,26 @@ function round2(value){
 
 function setHourlyTotal(){
     var today = moment().startOf('day')._d;
-    var hourly = Orders.aggregate([
+    var pipeline = [
         {$match: { created_at: {$gt: today}}},
         {$group: {_id:"$date.hour", total:{$sum:"$sum.total"}} }
-        ]);
-    console.log(hourly);
+        ];
+    var result = Orders.aggregate(pipeline);
+    console.log(result);
+    var hourly = [];
     var total = 0;
-    for (var i=0; i<hourly.length; i++){
-        total += hourly[i].total;
+    for (var i=0; i<result.length; i++){
+        var amount = round2(result[i].total);
+        hourly.push({hour: result[i]._id, amount: amount});
+        total += amount;
     }
-    total = round2(total);
     var d = moment().format("YYYYMMDD");
     var sale = Sales.findOne({_id:d});
     if (sale) {
-        Sales.update({_id:d}, { total: total });
+        Sales.update({_id:d}, { total: total, hourly: hourly });
     }
     else {
-        Sales.insert({ _id: d, total: total});
+        Sales.insert({ _id: d, total: total, hourly: hourly });
     }
     console.log("Total: "+total);
 }

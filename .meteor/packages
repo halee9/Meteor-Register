@@ -11,4 +11,5 @@ underscore
 mrt:moment
 iron:router
 fortawesome:fontawesome
+meteorhacks:aggregate
 

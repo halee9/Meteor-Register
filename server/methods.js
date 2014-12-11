@@ -59,10 +59,10 @@ Meteor.methods({
         cart.created_at = new Date();
         var d = {
             year: moment().format("YYYY"), 
-            month: moment().format("M"),
-            date: moment().format("D"),
+            month: moment().format("MM"),
+            date: moment().format("DD"),
             day: moment().format("E"),
-            hour: moment().format("H")
+            hour: moment().format("HH")
         };
         console.log(d);
         cart.date = d;
