@@ -86,30 +86,34 @@
 		<div>
 			{{#each items}}
 			<div class="items clear">
-				<div class="pull-left big_text">
+				<div class="pull-right big_text">{{ currency subtotal }}</div>
+				<div class="big_text">
 					{{#if multiple}}
 					{{ qty }} 
 					{{/if}}
 					{{ SKU }}
 				</div>
-				{{ #each option }}
-					{{ toCapitalize SKU }}
-				{{ /each }}
-				{{ custom_option.text }}
-				<div class="pull-right big_text">{{ currency subtotal }}</div>
+				<div class="clear option">
+					{{ #each option }}
+						{{ toCapitalize SKU }}
+					{{ /each }}
+					{{ custom_option.text }}
+				</div>
 			</div>
 			{{/each}}
+		</div>
+		<div>
+			<div class="pull-right">
+				<div class="text-right">Subtotal: {{currency sum.subtotal}}</div>
+				<div class="text-right">Tax: {{currency sum.tax}}</div>
+				<div class="text-right big_text">Total: {{currency sum.total}}</div>
+			</div>
 		</div>
 		<div class="clear">
 			<div class="pull-left bigger_text">
 				#{{lastTwoDigits order_number}}
 				{{getFirstLetter order_type}}
 				{{getFirstLetter eat_where}}
-			</div>
-			<div class="pull-right">
-				<div class="text-right">Subtotal: {{currency sum.subtotal}}</div>
-				<div class="text-right">Tax: {{currency sum.tax}}</div>
-				<div class="text-right">Total: {{currency sum.total}}</div>
 			</div>
 			<div class="clear big_text text-center">{{customer_name}}</div>
 			<div class="clear big_text text-center">{{timeForm reserved_time}}</div>
