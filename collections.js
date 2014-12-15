@@ -1,5 +1,6 @@
 Items = new Mongo.Collection("items");
 Categories = new Mongo.Collection("categories");
+Replaces = new Mongo.Collection("replaces");
 Modifiers = new Mongo.Collection("modifiers");
 Addons = new Mongo.Collection("addons");
 Carts = new Mongo.Collection("Carts");

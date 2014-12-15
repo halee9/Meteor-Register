@@ -11,6 +11,6 @@ Template.header.helpers({
     total: function(){
     	var today = moment().format("YYYYMMDD");
     	var sale = Sales.findOne({_id: today});
-    	return (sale) ? sale.total : null;
+    	return (sale) ? sale.daily.total : null;
     }
 });

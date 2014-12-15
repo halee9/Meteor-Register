@@ -3,11 +3,7 @@
 	<div class="row list">
 		<div class="col-sm-12 col-md-4">
 			<h2 class="text-center text_white">U N P A I D</h2>
-			<ul class="list-group">
-				{{ #each unpaid_orders }}
-					{{> each_order }}
-				{{ /each }}
-			</ul>
+			{{> unpaid_orders}}
 		</div>
 		<div class="col-sm-12 col-md-4">
 			<h2 class="text-center text_white">P A I D</h2>
@@ -26,6 +22,14 @@
 			</ul>
 		</div>
 	</div>
+</template>
+
+<template name="unpaid_orders">
+	<ul class="list-group unpaid_orders">
+		{{ #each unpaid_orders }}
+			{{> each_order }}
+		{{ /each }}
+	</ul>
 </template>
 
 <template name="each_order">
@@ -61,7 +65,7 @@
 			<tr class="item_actions">
 				<td colspan="6" class="text-center">
 					{{#if payment_action}}
-					<button type="button" class="payment btn"><i class="fa fa-usd fa-lg"></i></button>
+					<button type="button" class="paying btn"><i class="fa fa-usd fa-lg"></i></button>
 					{{/if}}
 					{{#if modify_action}}
 					<button type="button" class="modify btn"><i class="fa fa-pencil-square-o fa-lg"></i></button>

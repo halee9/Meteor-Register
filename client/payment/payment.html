@@ -77,8 +77,12 @@
 		{{#with pay}}
 		{{#if payable}}
 		<div class="col-sm-12">
+			<strong>
 			<div class="col-sm-3 text-right">Payable: </div>
-			<div class="col-sm-4">{{ currency payable }}</div>
+			<div class="col-sm-3">{{ currency payable }}</div>
+			<div class="col-sm-3 text-right">Change: </div>
+			<div class="col-sm-3">{{ currency change }}</div>
+			</strong>
 		</div>
 		<div class="col-sm-12">
 			<div class="col-sm-3 text-right">Credit: </div>
@@ -89,10 +93,6 @@
 			<div class="col-sm-3 text-right">Cash: </div>
 			<div class="col-sm-4"><input class="cash form-control input-lg" type="number" step="0.01" min="0.00" value="{{ currency cash }}"></div>
 			<div class="col-sm-4"><button class="cash_apply">Cash</button></div>
-		</div>
-		<div class="col-sm-12">
-			<div class="col-sm-3 text-right">Change: </div>
-			<div class="col-sm-9">{{ currency change }}</div>
 		</div>
 		<div class="col-sm-12">
 			{{#each cash_pickers}}

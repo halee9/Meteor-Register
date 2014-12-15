@@ -150,7 +150,7 @@ function convertOnlineOrderToPOS(online){
 }
 
 Meteor.setInterval(function(){
-    //setOnlineOrderToPOS();
+    setOnlineOrderToPOS();
     var handle = Meteor.setInterval(function(){
         if (DB_READ_DONE) {
             saveOnlineOrderDB(); 

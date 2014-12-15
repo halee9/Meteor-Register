@@ -5,7 +5,11 @@ Template.walkin_list.helpers({
         var today = moment().startOf('day')._d;
         var orders = Orders.find({ status: "Taken", order_type: "Walk-in", created_at: {$gt: today} }, {sort: {order_number: 1}}).fetch();
         for (var i=0; i<orders.length; i++){
-            orders[i].items = OrderItems.find({ _order: orders[i]._id }).fetch();
+            orders[i].items = OrderItems.find({ _order: orders[i]._id, _category: {$ne: "Mer"} }).fetch();
+            if (orders[i].items.length < 1) {
+                orders.splice(i,1);
+                i--;
+            }
         }
         return orders;
     }
@@ -22,7 +26,11 @@ Template.online_list.helpers({
             //eat_where: "Togo",
             }, {sort: {starting_at: 1}}).fetch();
         for (var i=0; i<orders.length; i++){
-            orders[i].items = OrderItems.find({ _order: orders[i]._id }).fetch();
+            orders[i].items = OrderItems.find({ _order: orders[i]._id, _category: {$ne: "Mer"} }).fetch();
+            if (orders[i].items.length < 1) {
+                orders.splice(i,1);
+                i--;
+            }
         }
         return orders;
     }
@@ -36,7 +44,11 @@ Template.finished_list.helpers({
             created_at: {$gt: today}
             }, {sort: {out_at: -1}}).fetch();
         for (var i=0; i<orders.length; i++){
-            orders[i].items = OrderItems.find({ _order: orders[i]._id }).fetch();
+            orders[i].items = OrderItems.find({ _order: orders[i]._id, _category: {$ne: "Mer"} }).fetch();
+            if (orders[i].items.length < 1) {
+                orders.splice(i,1);
+                i--;
+            }
         }
         return orders;
     }
@@ -118,17 +130,17 @@ Template.kitchen_ticket.helpers({
         var now = moment()._d;
         Orders.find({eat_where: "Togo", status: "Taken", created_at: {$gt: now}}).observe({
             added: function(order){
-                var handle = Meteor.setInterval(function(){
+                var handle = Meteor.setTimeout(function(){
                     var items = OrderItems.find({_order: order._id}).fetch();
                     if (items.length > 0) {
-                        Meteor.clearInterval(handle);
                         order.items = items;
                         Session.set("kitchen_ticket", JSON.stringify(order));
                         Meteor.setTimeout(function(){
-                            window.print();
+                            console.log("window print");
+                            //window.print();
                         }, 100);
                     }
-                }, 100);
+                }, 200);
             }
         });
         return JSON.parse(Session.get("kitchen_ticket"));
@@ -138,5 +150,9 @@ Template.kitchen_ticket.helpers({
     }
 });
 
-
+Template.kitchen_ticket.rendered = function(){
+    if (this.data) {
+        console.log("printing");
+    }
+};
 

@@ -2,6 +2,8 @@
 	background-color: #eee;
 	border-radius: 2px;
 	clear: both;
+	font-weight: normal;
+	overflow: hidden;
 }
 .cart .item .price {
 	font-size: inherit;

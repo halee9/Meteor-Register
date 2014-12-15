@@ -139,6 +139,7 @@ Template.pay_info.helpers({
 			Session.set("payable_tax", amount.payable.tax);
 			Session.set("credit", amount.payable.total);
 			Session.set("cash", 0);
+			Session.set("change", 0);
 			
 			console.log(amount);
 			return amount;

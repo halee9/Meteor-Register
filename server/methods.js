@@ -64,7 +64,7 @@ Meteor.methods({
             day: moment().format("E"),
             hour: moment().format("HH")
         };
-        console.log(d);
+        //console.log(d);
         cart.date = d;
         
         if (cart.eat_where == EAT_WHERE[1] && cart.order_type != ORDER_TYPE[0]) {
@@ -137,6 +137,13 @@ Meteor.methods({
     },
     addPayment: function(order_id, credit, cash_in, change, payable) {
         var created_at = new Date();
+        var d = {
+            year: moment().format("YYYY"), 
+            month: moment().format("MM"),
+            date: moment().format("DD"),
+            day: moment().format("E"),
+            hour: moment().format("HH")
+        };
         var payments_id = Payments.insert({
             created_at: created_at,
             credit: credit,
@@ -144,7 +151,8 @@ Meteor.methods({
             change: change,
             cash: (cash_in - change),
             _order: order_id,
-            sum: payable
+            sum: payable,
+            date: d
         });
         var items = OrderItems.find({_order: order_id}).fetch();
         var unpaid_item = false;

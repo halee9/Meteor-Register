@@ -1,6 +1,6 @@
 Session.setDefault("selected_list_order", null);
 
-Template.list.helpers({
+Template.unpaid_orders.helpers({
     unpaid_orders: function () {
         var today = moment().startOf('day')._d;
         var orders = Orders.find({ pay_status: "Unpaid", created_at: {$gt: today}}, {sort: {order_number: -1}}).fetch();
@@ -9,7 +9,10 @@ Template.list.helpers({
             orders[i].items = OrderItems.find({_order: orders[i]._id}).fetch();
         }
         return orders;
-    },
+    }
+})
+
+Template.list.helpers({
     paid_orders: function () {
         var today = moment().startOf('day')._d;
         var orders = Orders.find({ pay_status: "Paid", status: {$in: ['Taken', 'Ready']}, created_at: {$gt: today}}, {sort: {order_number: -1}}).fetch();
@@ -42,7 +45,7 @@ Template.each_order.helpers({
         return Session.equals("selected_list_order", this._id) ? "selected" : '';
     },
     show: function() {
-        console.log(Session.get("selected_list_order"));
+        //console.log(Session.get("selected_list_order"));
         return Session.equals("selected_list_order", this._id) ? true : false;
     },
     last_two: function(number) {
@@ -86,7 +89,7 @@ Template.each_order.events({
         else
             Session.set("selected_list_order", id);
     },
-    "click button.payment": function(e, temp){
+    "click button.paying": function(e, temp){
         e.preventDefault();
         var id = temp.data._id;
         Router.go("/payment/"+id);

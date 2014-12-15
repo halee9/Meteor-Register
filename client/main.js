@@ -46,6 +46,9 @@ Router.route('/kitchen', function(){
 Router.route('/orders', function(){
 	this.render('list');
 });
+Router.route('/dashboard', function(){
+	this.render('dashboard');
+});
 Router.route('/customer_display', function(){
 	this.render('customer_display', {
 		data: function() { 
@@ -175,7 +178,7 @@ Cart = {
         }
         else {
             item._item = item._id;
-            item.option = [];
+            item.options = [];
             item.qty = 1;
             item.pay_status = PAY_STATUS_TYPE[1];
             var idx = Session.get("selected_cart_item_index");
@@ -194,8 +197,8 @@ Cart = {
     },
 	isSameItem: function(items, item){
 	    for (var i=0; i<items.length; i++) {
-	        if (items[i]._item == item._id) {
-	            if (items[i].option.length < 1)
+	        if (items[i]._item == item._id && items[i].SKU == item.SKU) {
+	            if (items[i].options.length < 1)
 	                return i;
 	        }
 	    }
@@ -254,15 +257,15 @@ Cart = {
 	    var item = items[index];
 	    console.log(item);
 	    //if (typeof item.option === 'undefined') item.option = [];
-	    item.option.push(option);
+	    item.options.push(option);
 	    this.setCartItems(items);
     },
     removeOption: function(SKU, index) {
 	    var items = this.getCartItems();
 	    var item = items[index];
-	    for (var i=0; i<item.option.length; i++) {
-	        if (item.option[i].SKU == SKU) {
-	            item.option.splice(i,1);
+	    for (var i=0; i<item.options.length; i++) {
+	        if (item.options[i].SKU == SKU) {
+	            item.options.splice(i,1);
 	            break;
 	        }
 	    }
@@ -315,8 +318,8 @@ Tracker.autorun(function(){
     var sum = { total: 0, subtotal: 0, tax: 0 };
     for (var i=0; i < cartitems.length; i++) {
         var unit_price = cartitems[i].price;
-        for (var j=0; j<cartitems[i].option.length; j++) {
-            unit_price += cartitems[i].option[j].price;
+        for (var j=0; j<cartitems[i].options.length; j++) {
+            unit_price += cartitems[i].options[j].price;
         }
         if (cartitems[i].custom_option) {
         	unit_price += parseFloat(cartitems[i].custom_option.price);
@@ -385,6 +388,10 @@ UI.registerHelper('timeForm', function(time) {
 	if (time)
 		return moment(time).format('h:mm a');
 	else return null;
+});
+
+UI.registerHelper('ratio', function(numA, numB) {
+	return (numA / numB * 100).toFixed(0) + "%";
 });
 
 

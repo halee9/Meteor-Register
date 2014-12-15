@@ -1,0 +1,16 @@
+.dashboard table {
+	width: 100%;
+	font-size: 20px;
+	margin-top: 10px;
+	border: 1px solid #000;
+}
+
+.dashboard table th {
+	text-align: center;
+	background-color: #aaa;
+	border: 1px solid #000;
+}
+.dashboard table td {
+	text-align: center;
+	border: 1px solid #000;
+}

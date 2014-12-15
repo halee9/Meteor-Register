@@ -1,0 +1,67 @@
+<template name="dashboard">
+	<div class="dashboard">
+		<div class="col-md-6">
+		{{#with sales}}
+			{{> sales_total}}
+			{{> sales_hourly}}
+		{{/with}}
+		</div>
+		<div class="col-md-6">
+			{{> order_list}}
+		</div>
+	</div>
+</template>
+
+<template name="sales_total">
+	{{#with daily}}
+	<table class="white">
+		<tr>
+			<th>Date</th><th>Total</th><th>Credit</th><th>Cash</th><th>Ratio</th>
+		</tr>
+		<tr>
+			<td>{{date}}</td>
+			<td>{{currency total}}</td>
+			<td>{{currency credit}}</td>
+			<td>{{currency cash}}</td>
+			<td>{{ratio credit total}}</td>
+		</tr>
+	</table>
+	{{/with}}
+</template>
+
+<template name="sales_hourly">
+	<table class="white">
+		<tr>
+			<th>Hour</th><th>Total</th><th>Credit</th><th>Cash</th><th>Ratio</th>
+		</tr>
+		{{#each hourly}}
+		<tr>
+			<td>{{hour}}</td><td>{{total}}</td><td>{{credit}}</td><td>{{cash}}</td><td>{{ratio credit total}}</td>
+		</tr>
+		{{/each}}
+	</table>
+</template>
+
+<template name="order_list">
+	<table class="white">
+		<tr>
+			<th>No</th><th>Items</th><th>Amount</th><th>TP</th><th>EW</th><th>ST</th><th>PAY</th>
+		</tr>
+		{{#each orders}}
+		<tr>
+			<td>{{order_number}}</td>
+			<td>
+				{{#each items}}
+				<div>{{SKU}}</div>
+				{{/each}}
+			</td>
+			<td>{{sum.total}}</td>
+			<td>{{order_type}}</td>
+			<td>{{eat_where}}</td>
+			<td>{{status}}</td>
+			<td>{{pay_status}}</td>
+		</tr>
+		{{/each}}
+	</table>
+</template>
+

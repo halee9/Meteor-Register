@@ -24,7 +24,7 @@
 		<span>{{name}}</span>
 		<span class="price">{{subtotal}}</span>
 		<div class="option">
-			{{ #each option }}
+			{{ #each options}}
 				<span>{{ SKU }} |</span>
 			{{ /each }}
 			<span>{{ custom_option.text }}</span>
@@ -80,15 +80,17 @@
 			<span>Remove</span>
 			{{/if}}
 		</button>
-		<button type="button" class="toggle send_order royalBlue"><i class="fa fa-save"></i>
+		<button type="button" class="toggle send_order royalBlue">
 			{{#if update_mode}}
-			 REPLACE
+			 <i class="fa fa-save"></i> REPLACE
 			{{else}}
-			 SEND
+			 <i class="fa fa-dollar"></i> CASH
 			{{/if}}
 		</button>
 		{{#if update_mode}}
-		<button type="button" class="cancel_modify btn btn-default btn-lg">CANCEL</button>
+		<button type="button" class="cancel_modify btn btn-primary btn-lg">CANCEL</button>
+		{{else}}
+		<button type="button" class="send_credit_payment btn btn-primary btn-lg"><i class="fa fa-credit-card"></i> ALL CREDIT PAYMENT</button>
 		{{/if}}
 	</div>
 </template>

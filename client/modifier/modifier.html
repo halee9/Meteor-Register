@@ -1,22 +1,37 @@
 <template name="modifier">
-	<!--<div id="order_list">{{> order_list }}</div>
-	<div id="customer_name">{{> customer_name }}</div>
-	<div id="reserved_time">{{> reserved_time }}</div>-->
 	<div class="modifier hidden-print">
-		<div class="col-md-6">
-			{{> modifiers }}
-			{{> name_changer }}
-		</div>
-		<div class="col-md-6">
-			{{> addons }}
+		{{> name_changer }}
+		<div class="clear">
+			<div class="col-md-6">
+				{{> modifiers }}
+			</div>
+			<div class="col-md-6">
+				{{> modifier_items }}
+			</div>
 		</div>
 	</div>
 </template>
 
 <template name="modifiers">
 	{{ #each items }}
-		{{> modifier_item}}
+		{{> modifier_group}}
 	{{ /each }}
+</template>
+
+<template name="modifier_group">
+    <div class="item {{background}} {{selected}}">
+		<span class="id">{{_id}}</span>
+		{{#if items_count}}
+		<span class="badge">{{items_count}}</span>
+		{{/if}}
+		<div class="name">{{name}}</div>
+    </div>
+</template>
+
+<template name="modifier_items">
+	  	{{ #each items }}
+	  		{{> modifier_item}}
+	  	{{ /each }}
 </template>
 
 <template name="modifier_item">
@@ -27,10 +42,14 @@
     </div>
 </template>
 
+
+
 <template name="name_changer">
+	<div class="name_changer">
 	{{ #each items }}
 		{{> name_changer_item}}
 	{{ /each }}
+	</div>
 </template>
 
 <template name="name_changer_item">

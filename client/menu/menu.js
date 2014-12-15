@@ -62,6 +62,8 @@ Template.item.events({
         Session.set("show_special_option", false);
         Cart.addCartItem(temp.data);
         //Session.set('selected_cart_item_index', Cart.getLastItemIndex());
+        Session.set("selected_modifier_group", null);
+        Session.set('selected_name_changer', null);
     }
 });
 

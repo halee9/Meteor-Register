@@ -35,6 +35,7 @@ Template.order_cart_item.events({
             Session.set("show_special_option", false);
             //addItemCart(this);
         }
+        Session.set("selected_modifier_group", null);
     },
     "keyup input": function(theEvent, theTemplate) {
         var index = Session.get("selected_cart_item_index");
@@ -83,6 +84,20 @@ Template.cart_control.events({
     "click .cancel_modify": function(theEvent, theTemplate){
         Cart.initCart();
         Router.go("/register");
+    },
+    "click .send_credit_payment": function(){
+        var cart = Cart.getCart();
+        var items = Cart.getCartItems();
+        Meteor.call("addOrder", cart, items, function(err, response){
+            if (response.order_type != ORDER_TYPE[0]) {
+                Cart.initCart();
+            }
+            else {
+                Meteor.call('addPayment', response.order_id, cart.sum.total, 0, 0, cart.sum, function (error, response) {
+                    Router.go("/ticket/"+response.order_id);
+                });
+            }
+        });
     }
 });
 

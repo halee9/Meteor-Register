@@ -6,14 +6,14 @@ Template.customer_ticket.helpers({
 
 Template.customer_ticket.rendered = function () {
     if (this.data) {
-        if (this.data.order_type == ORDER_TYPE[0]) {
+        if (this.data.pay_status == "Paid") {
             window.print();
-            Router.go("/payment/"+this.data._id);
+            Router.go("/register");
         }
         else {
-            if (this.data.pay_status == "Paid") {
+            if (this.data.order_type == ORDER_TYPE[0]) {
                 window.print();
-                Router.go("/register");
+                Router.go("/payment/"+this.data._id);
             }
             else {
                 Router.go("/register");
