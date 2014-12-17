@@ -318,6 +318,7 @@ Tracker.autorun(function(){
     var sum = { total: 0, subtotal: 0, tax: 0 };
     for (var i=0; i < cartitems.length; i++) {
         var unit_price = cartitems[i].price;
+        console.log(cartitems[i]);
         for (var j=0; j<cartitems[i].options.length; j++) {
             unit_price += cartitems[i].options[j].price;
         }

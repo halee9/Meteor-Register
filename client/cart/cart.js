@@ -21,6 +21,7 @@ Template.order_total.events({
 Template.order_cart_item.events({
     "click": function(theEvent, theTemplate){
         console.log(theTemplate.data);
+        if (theTemplate.data.online_id) return;
         if (isCartItemSelected(theTemplate.data)) {
             Session.set("show_special_option", true);
         }

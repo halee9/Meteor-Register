@@ -1,103 +1,94 @@
+Fiber = Npm.require('fibers');
+Mysql = Npm.require('mysql');
 
-var Online_orders = [];
-var Online_order_items = [];
+RemoteDB = Mysql.createPool({
+    host : '50.87.137.80',
+    port : '3306',
+    database : 'teriyak1_online',
+    user : 'teriyak1',
+    password : 'coveN13 13'
+});
+
 var COUNTER = 0;
-var DB_READ_DONE = false;
 
-var mysql = Npm.require('mysql');
+Meteor.startup(function () {
+    setOnlineOrderToPOS();
+    Meteor.setInterval(function(){
+        setOnlineOrderToPOS();
+    }, 30000);
+});
 
 function setOnlineOrderToPOS(){
     console.log("db start: " + new Date());
-    var pool = mysql.createPool({
-        host : '50.87.137.80',
-        port : '3306',
-        database : 'teriyak1_online',
-        user : 'teriyak1',
-        password : 'coveN13 13'
-    });
+    var online_order = Orders.findOne({},{sort:{online_id: -1}});
+    if (online_order)
+        var last_id = online_order.online_id;
+    else var last_id = 0;
+    console.log("last Online ID: " + last_id);
 
-    pool.getConnection(function(err, connection) {
+    RemoteDB.getConnection(function(err, connection) {
+
         var today = moment().format("YYYY-MM-DD");
         console.log("Get Connection = " + COUNTER++);
         var q = "SELECT * FROM Orders WHERE dateCreated = '" + today + "' "
-            + "AND status IN ('P','T') "
-            + "ORDER BY Orders.id";
+            + "AND id > " + last_id + " "
+            + "AND status IN ('P','T','D') "
+            + "ORDER BY id";
+        var count3 = 0;
+        var items_length = 0;
         connection.query(q, function(err, rows, fields) {
-            if (err) {
-                throw err;
-            }
-            if (Online_orders.length < rows.length) {
-                console.log("WE HAVE " + (rows.length - Online_orders.length) + " NEW ONLINE ORDERS!!");
-                for (var i=Online_orders.length; i<rows.length; i++){
-                    //console.log(rows[i].id + " " + rows[i].name + " " + rows[i].no);
-                    var release = false;
-                    if (i == (rows.length-1)) {
-                        release = true;
+            if (err) throw err;
+            console.log("WE HAVE " + rows.length + " NEW ONLINE ORDERS!!");
+            var orders = [];
+            for (var i=0; i<rows.length; i++){
+                orders.push(rows[i]);
+                connection.query("SELECT * FROM Order_item WHERE order_id = '" + rows[i].id + "'", function(err2, rows2, fields2) {
+                    if (err2) throw err2;
+                    for (var j=0; j<rows2.length; j++){
+                        var index = getIndexById(orders, rows2[j].order_id);
+                        if (!orders[index].items) orders[index].items = [];
+                        orders[index].items.push(rows2[j]);
+                        items_length++;
+                        connection.query("SELECT * FROM Order_item_option WHERE order_id = '" 
+                            + rows2[j].order_id + "' AND item_no = '" + rows2[j].no + "'", function(err3, rows3, fields3) {
+                            if (err3) throw err3;
+                            for (var k=0; k<rows3.length; k++) {
+                                var index = getIndexById(orders, rows3[k].order_id);
+                                var i_index = rows3[k].item_no-1;
+                                var option = { SKU: rows3[k].option_name, name: rows3[k].option_name, price: rows3[k].option_price };
+                                if (!orders[index].items[i_index].options) orders[index].items[i_index].options = [];
+                                orders[index].items[i_index].options.push(option);
+                            }
+                            count3++;
+                            if (count3 == items_length) {
+                                console.log("end query3: "+count3+ " "+items_length);
+                                saveOnlineOrderDB(orders);
+                            }
+                        });
                     }
-                    //Online_orders.push(rows[i]);
-                    Online_orders.push(rows[i]);
-                    getOnlineOrderItem(connection, Online_orders[Online_orders.length-1], release);
-                }
-            }
-            else {
-                console.log("NO NEW ONLINE ORDERS!");
-                connection.destroy();
+                });
             }
         });
-
     });
 }
 
-function getOnlineOrderItem(connection, order, release){
-    connection.query("SELECT * FROM Order_item WHERE order_id = '" + order.id + "'", function(err, rows, fields) {
-        if (err) throw err;
-        order.items = [];
-        for (var i=0; i<rows.length; i++){
-            getOnlineOrderOption(connection, order, rows[i], release);
-        }
-    });
-}
-
-function getOnlineOrderOption(connection, order, item, release){
-    
-    connection.query("SELECT * FROM Order_item_option WHERE order_id = '" + order.id + "' AND item_no = '" + item.no + "'", function(err, rows, fields) {
-        if (err) throw err;
-        item.options = [];
-        if (rows.length > 0) {
-            for (var j=0; j<rows.length; j++) {
-                var option = { SKU: rows[j].option_name, name: rows[j].option_name, price: rows[j].option_price };
-                item.options.push(option);
-            }
-        }
-        order.items.push(item);
-        //console.log(item);
-        if (release == true) {
-            DB_READ_DONE = true;
-            //connection.destroy();
-            //saveOnlineOrderDB();
-            //console.log("Connection release!");
-            //connection.destroy();
-        }
-        //Online_order_items.push(order);
-        //console.log(Online_orders[0].item);
-
-    });
-}
-
-function saveOnlineOrderDB(){
-    console.log("local start: " + new Date());
-    console.log("online order count => " + Online_orders.length);
-    for (var i=0; i<Online_orders.length; i++){
-        if (Online_orders[i].inserted) {
-
-        }
-        else {
-            console.log(Online_orders[i].id + " will be inserted!");
-            //console.log(Online_order_items[i]);
-            convertOnlineOrderToPOS(Online_orders[i]);
-            Online_orders[i].inserted = true;
-        }
+function getIndexById(orders, id) {
+    for (var i=0; i<orders.length; i++){
+        if (orders[i].id == id) return i;
     }
+    return -1;
+}
+
+
+function saveOnlineOrderDB(orders){
+    console.log("local start: " + new Date());
+    console.log("online order count => " + orders.length);
+    Fiber(function(){
+        for (var i=0; i<orders.length; i++){
+            console.log(orders[i].id + " will be inserted!");
+            convertOnlineOrderToPOS(orders[i]);
+        }
+    }).run();
 }
 
 
@@ -117,7 +108,7 @@ function convertOnlineOrderToPOS(online){
             customer_phone: online.cust_phone,
             eat_where: eat_where,
             order_type: "Online",
-            pay_staus: "Unpaid",
+            pay_status: "Unpaid",
             reserved_time: reserved_time,
             status: "Taken",
             sum: {
@@ -131,6 +122,11 @@ function convertOnlineOrderToPOS(online){
 
         console.log("items=>"+online.items.length);
         for (var i=0; i<online.items.length; i++){
+            if (online.items[i].special_instruction.length > 0) {
+                var custom_option = {text: online.items[i].special_instruction, price: 0}
+            }
+            else var custom_option = {};
+            if (online.items[i].options == null) online.items[i].options = [];
             var item = {
                 SKU: online.items[i].abbr,
                 name: online.items[i].name,
@@ -140,7 +136,9 @@ function convertOnlineOrderToPOS(online){
                 qty: online.items[i].count,
                 price: (online.items[i].price/online.items[i].count),
                 subtotal: online.items[i].price,
-                option: online.items[i].options
+                options: online.items[i].options,
+                custom_option: custom_option,
+                online_id: online.id
             };
             //console.log(item);
             OrderItems.insert(item);
@@ -148,15 +146,4 @@ function convertOnlineOrderToPOS(online){
     }
 
 }
-
-Meteor.setInterval(function(){
-    setOnlineOrderToPOS();
-    var handle = Meteor.setInterval(function(){
-        if (DB_READ_DONE) {
-            saveOnlineOrderDB(); 
-            DB_READ_DONE = false;
-            Meteor.clearInterval(handle);
-        }     
-    }, 2000);
-}, 30000);
 
