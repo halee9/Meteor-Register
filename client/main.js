@@ -147,6 +147,7 @@ Cart = {
     },
     setCartItems: function(cartItems){
         Session.set("cartItems", JSON.stringify(cartItems));
+    	//console.log(JSON.parse(Session.get("cartItems")));
     },
     getCartAll: function(){
     	var cart = this.getCart();
@@ -184,8 +185,8 @@ Cart = {
             var idx = Session.get("selected_cart_item_index");
             console.log(idx);
             if (idx == null) {
-    	    	cart_items.push(item);
     	    	Session.set("selected_cart_item_index", this.getLastItemIndex()+1);
+    	    	cart_items.push(item);
             }
             else {
             	cart_items.splice(idx+1,0,item);
@@ -308,6 +309,7 @@ Cart = {
     backToCart: function(order, orderItems){
     	this.setCart(order);
     	this.setCartItems(orderItems);
+    	//console.log(orderItems);
         //return this.getCartAll();
     }
 };

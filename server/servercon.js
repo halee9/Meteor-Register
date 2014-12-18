@@ -62,12 +62,14 @@ function setOnlineOrderToPOS(){
                             count3++;
                             if (count3 == items_length) {
                                 console.log("end query3: "+count3+ " "+items_length);
+                                connection.release();
                                 saveOnlineOrderDB(orders);
                             }
                         });
                     }
                 });
             }
+            if (rows.length < 1) connection.release();
         });
     });
 }
@@ -122,11 +124,6 @@ function convertOnlineOrderToPOS(online){
 
         console.log("items=>"+online.items.length);
         for (var i=0; i<online.items.length; i++){
-            if (online.items[i].special_instruction.length > 0) {
-                var custom_option = {text: online.items[i].special_instruction, price: 0}
-            }
-            else var custom_option = {};
-            if (online.items[i].options == null) online.items[i].options = [];
             var item = {
                 SKU: online.items[i].abbr,
                 name: online.items[i].name,
@@ -136,12 +133,18 @@ function convertOnlineOrderToPOS(online){
                 qty: online.items[i].count,
                 price: (online.items[i].price/online.items[i].count),
                 subtotal: online.items[i].price,
-                options: online.items[i].options,
-                custom_option: custom_option,
-                online_id: online.id
+                online_id: online.id,
+                options: []
             };
             //console.log(item);
             OrderItems.insert(item);
+            if (online.items[i].special_instruction.length > 0) {
+                var custom_option = {text: online.items[i].special_instruction, price: 0};
+                OrderItems.update({_id:order_id}, {$set: {custom_option: custom_option}});
+            }
+            if (online.items[i].options != null) {
+                OrderItems.update({_id:order_id}, {$set: {options: online.items[i].options}});
+            }
         }
     }
 
