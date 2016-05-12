@@ -48,6 +48,7 @@ mongo@1.0.9
 mrt:moment@2.8.1
 observe-sequence@1.0.3
 ordered-dict@1.0.1
+patrickocoffeyo:mysql@0.0.1
 random@1.0.1
 reactive-dict@1.0.4
 reactive-var@1.0.3

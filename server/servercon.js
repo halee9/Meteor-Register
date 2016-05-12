@@ -1,21 +1,24 @@
 Fiber = Npm.require('fibers');
+/*
 Mysql = Npm.require('mysql');
 
 RemoteDB = Mysql.createPool({
-    host : '50.87.137.80',
+    host : '00.00.0.0', // hostname
     port : '3306',
-    database : 'teriyak1_online',
-    user : 'teriyak1',
-    password : 'coveN13 13'
+    database : 'database_name',
+    user : 'username',
+    password : 'password'
 });
-
+*/
 var COUNTER = 0;
 
 Meteor.startup(function () {
+    /*
     setOnlineOrderToPOS();
     Meteor.setInterval(function(){
         setOnlineOrderToPOS();
     }, 30000);
+*/
 });
 
 function setOnlineOrderToPOS(){
@@ -49,7 +52,7 @@ function setOnlineOrderToPOS(){
                         if (!orders[index].items) orders[index].items = [];
                         orders[index].items.push(rows2[j]);
                         items_length++;
-                        connection.query("SELECT * FROM Order_item_option WHERE order_id = '" 
+                        connection.query("SELECT * FROM Order_item_option WHERE order_id = '"
                             + rows2[j].order_id + "' AND item_no = '" + rows2[j].no + "'", function(err3, rows3, fields3) {
                             if (err3) throw err3;
                             for (var k=0; k<rows3.length; k++) {
@@ -96,7 +99,7 @@ function saveOnlineOrderDB(orders){
 
 function convertOnlineOrderToPOS(online){
     var order = Orders.findOne({ online_id: online.id });
-    
+
     if (order) {
         var order_id = order._id;
         console.log(order.online_id + " is already exist!");
